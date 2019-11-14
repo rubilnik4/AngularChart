@@ -10,9 +10,9 @@ namespace AngularChartD.Models
     public class Project
     {
         public int Id { get; set; }
-
+        
         [Required]
-        public string Сompany { get; set; }
+        public string Contractor { get; set; }
 
         [Required]
         public int TargetProjects { get; set; }

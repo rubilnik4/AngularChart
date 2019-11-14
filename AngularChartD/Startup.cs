@@ -100,28 +100,28 @@ namespace AngularChartD
                 {
                     new Project
                     {
-                        Ñompany = "ÎÎÎ Ñåâåğ",
+                        Contractor ="ÎÎÎ Ñåâåğ",
                         CompleteProjects = 1,
                         TargetProjects = 3,
                         Date = new DateTime(2018, 5, 1),
                     },
                     new Project
                     {
-                        Ñompany = "ÎÎÎ Şã",
+                        Contractor ="ÎÎÎ Şã",
                         CompleteProjects = 2,
                         TargetProjects = 4,
                         Date = new DateTime(2018, 5, 1),
                     },
                     new Project
                     {
-                        Ñompany = "ÎÎÎ Çàïàä",
+                        Contractor ="ÎÎÎ Çàïàä",
                         CompleteProjects = 3,
                         TargetProjects = 4,
                         Date = new DateTime(2018, 5, 1),
                     },
                     new Project
                     {
-                        Ñompany = "ÎÎÎ Âîñòîê",
+                        Contractor ="ÎÎÎ Âîñòîê",
                         CompleteProjects = 4,
                         TargetProjects = 5,
                         Date = new DateTime(2018, 5, 1),
@@ -129,28 +129,28 @@ namespace AngularChartD
 
                     new Project
                     {
-                        Ñompany = "ÎÎÎ Ñåâåğ",
+                        Contractor ="ÎÎÎ Ñåâåğ",
                         CompleteProjects = 2,
                         TargetProjects = 5,
                         Date = new DateTime(2018, 6, 1),
                     },
                     new Project
                     {
-                        Ñompany = "ÎÎÎ Şã",
+                        Contractor ="ÎÎÎ Şã",
                         CompleteProjects = 3,
                         TargetProjects = 4,
                         Date = new DateTime(2018, 6, 1),
                     },
                     new Project
                     {
-                        Ñompany = "ÎÎÎ Çàïàä",
+                        Contractor ="ÎÎÎ Çàïàä",
                         CompleteProjects = 1,
                         TargetProjects = 3,
                         Date = new DateTime(2018, 6, 1),
                     },
                     new Project
                     {
-                        Ñompany = "ÎÎÎ Âîñòîê",
+                        Contractor ="ÎÎÎ Âîñòîê",
                         CompleteProjects = 3,
                         TargetProjects = 5,
                         Date = new DateTime(2018, 6, 1),

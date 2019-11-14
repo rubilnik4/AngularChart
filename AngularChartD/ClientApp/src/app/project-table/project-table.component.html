@@ -1,20 +1,27 @@
 
 <div class="container-fluid">
-  <h1>Список</h1>
 
   <ng-template [ngIf]="tableMode" [ngIfElse]="createAndEdit">
-    <input type="button" value="Добавить" class="btn btn-default" (click)="add()" />
+    <h1>Список выполненных задач</h1>
+
+    <input type="button" value="Добавить" class="btn btn-success" (click)="addNewProject()" />   
 
     <table class="table table-striped">
       <thead>
         <tr>
-          <td>Наименование</td>
+          <td>Организация</td>
+          <td>Запланировано</td>
+          <td>Выполнено</td>
+          <td>Дата</td>
           <td></td>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let p of projects">
-          <td>{{p?.company}}</td>
+          <td>{{p?.contractor}}</td>
+          <td>{{p?.targetProjects}}</td>
+          <td>{{p?.completeProjects}}</td>
+          <td>{{p?.date | date: 'MM/yyyy'}}</td>
           <td>
             <button class="btn btn-sm btn-primary" (click)="editList(l)">Изменить</button>
             <button class="btn btn-sm btn-danger" (click)="delete(l)">Удалить</button>
@@ -24,62 +31,31 @@
     </table>
   </ng-template>
 
-  <!--<ng-template #createAndEdit>
+  <ng-template #createAndEdit>
     <div class="form-group">
-      <label>Наименование</label>
-      <input type="text" name="nameList" *ngIf="isUserAuthenticated" [(ngModel)]="oneList.name" class="form-control" #nameList="ngModel" required />
-      <div *ngIf="isReadByrefMode">
-        <label> {{oneList.name}}</label>
-      </div>
+      <label>Организация</label>
+      <input type="text" [(ngModel)]="oneProject.contractor" class="form-control" />
     </div>
-    <h3>Задачи</h3>
-
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <td>Наименование</td>
-          <td>Выполнено</td>
-          <td></td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let t of oneList.tasksTo; let index = index;">
-          <td>
-            <div>
-              <input type="text" name="tableList" *ngIf="isUserAuthenticated" [(ngModel)]="oneList.tasksTo[index].name" class="form-control" />
-              <label *ngIf="isReadByrefMode"> {{oneList.tasksTo[index].name}}</label>
-            </div>
-          </td>
-          <td>
-            <input type="checkbox" [disabled]="isReadByrefMode" [(ngModel)]="oneList.tasksTo[index].complete" />
-          </td>
-          <td>
-            <button class="btn btn-sm btn-danger" *ngIf="isUserAuthenticated" (click)="deleteTask(t)">Удалить</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="form-group" *ngIf="isUserAuthenticated">
-      <label>Наименование задачи</label>
-      <input type="text" name="nameTask" [(ngModel)]="addName" class="form-control" #nameTask="ngModel" required />
-      <br />
-      <input type="button" value="Добавить" [disabled]="nameTask.invalid" (click)="addTask(addName)" class="btn btn-success" />
+    <div class="form-group">
+      <label>Проектов запланировано</label>
+      <input type="text" [(ngModel)]="oneProject.targetProjects" class="form-control" />
     </div>
-
-    <br />
-    <br />
-    <br />
-    <br />
-
+    <div class="form-group">
+      <label>Проектов выполнено</label>
+      <input type="text" [(ngModel)]="oneProject.completeProjects" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label>Дата</label>
+      <input type="text" [(ngModel)]="oneProject.date" class="form-control" />
+    </div>
     <div>
       <div [hidden]="!errorModel" class="alert alert-danger">
         Заполните таблицу данных
       </div>
-      <input type="button" value="Сохранить" *ngIf="isUserAuthenticated" [disabled]="nameList.invalid" (click)="save()" class="btn btn-success" />
-      <input type="button" value="Отмена" (click)="cancel(true)" class="btn btn-warning" />
+      <input type="button" value="Сохранить" (click)="save()" class="btn btn-success" />
+      <input type="button" value="Отмена" (click)="cancel()" class="btn btn-warning" />
     </div>
-  </ng-template>-->
+  </ng-template>
 
 </div>
 

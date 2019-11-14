@@ -21,7 +21,7 @@ import { Project } from '../../models/project';
 
 export class ProjectTableComponent implements OnInit {
 
-  //oneList: ListOfTasks = new ListOfTasks();
+  oneProject: Project = new Project();
   projects: Project[];
   tableMode: boolean = true;
 
@@ -46,7 +46,9 @@ export class ProjectTableComponent implements OnInit {
   //получаем данные через сервис
   loadProducts() {
     this.dataService.getProjects()
-      .subscribe((data: Project[]) => this.projects = data);
+      .subscribe((data: Project[]) => {
+        this.projects = data;
+      });
   }
   //// сохранение данных
   //save() {
@@ -83,22 +85,22 @@ export class ProjectTableComponent implements OnInit {
 
   //  this.oneList = l;
   //}
-  //cancel(updateNeed: Boolean) {
-  //  this.oneList = new ListOfTasks();
-  //  this.tableMode = true;
-  //  if (updateNeed) {
-  //    this.loadProducts();
+  //cancel(updateneed: boolean) {
+  //  this.onelist = new listoftasks();
+  //  this.tablemode = true;
+  //  if (updateneed) {
+  //    this.loadproducts();
   //  }
   //}
   //delete(p: ListOfTasks) {
   //  this.dataService.deleteListOfTasks(p.id)
   //    .subscribe(data => this.loadProducts());
   //}
-  //add() {
-  //  this.cancel(false);
-  //  this.tableMode = false;
-  //  this.oneList = new ListOfTasks();
-  //}
+
+  addNewProject() {   
+    this.tableMode = false;
+    this.oneProject = new Project();
+  }
 
   //addTask(name: string) {
   //  if (typeof this.oneList.tasksTo !== 'undefined' && this.oneList.tasksTo.length > 0) {
