@@ -14,16 +14,14 @@ export class DataService {
     return this.http.get(this.urlTask);
   }
 
-  //createListOfTasks(listOfTasks: ListOfTasks) {
-
-  //  return this.http.post(this.urlTask, listOfTasks);
-  //}
-  //updateListOfTasks(listOfTasks: ListOfTasks) {
-
-  //  return this.http.put(this.urlTask + '/' + listOfTasks.id, listOfTasks);
-  //}
-  //deleteListOfTasks(id: number) {
-  //  return this.http.delete(this.urlTask + '/' + id);
-  //}
+  createProject(project: Project) {
+    return this.http.post(this.urlTask, project);
+  }
+  updateProject(project: Project) {
+    return this.http.put(this.urlTask + '/' + project.id, project);
+  }
+  deleteProject(id: number) {
+    return this.http.delete(this.urlTask + '/' + id);
+  }
 
 }

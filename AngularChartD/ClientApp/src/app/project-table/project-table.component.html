@@ -4,7 +4,7 @@
   <ng-template [ngIf]="tableMode" [ngIfElse]="createAndEdit">
     <h1>Список выполненных задач</h1>
 
-    <input type="button" value="Добавить" class="btn btn-success" (click)="addNewProject()" />   
+    <input type="button" value="Добавить" class="btn btn-success" (click)="addProject()" />
 
     <table class="table table-striped">
       <thead>
@@ -23,8 +23,8 @@
           <td>{{p?.completeProjects}}</td>
           <td>{{p?.date | date: 'MM/yyyy'}}</td>
           <td>
-            <button class="btn btn-sm btn-primary" (click)="editList(l)">Изменить</button>
-            <button class="btn btn-sm btn-danger" (click)="delete(l)">Удалить</button>
+            <button class="btn btn-sm btn-primary" (click)="editProject(p)">Изменить</button>
+            <button class="btn btn-sm btn-danger" (click)="deleteProject(p)">Удалить</button>
           </td>
         </tr>
       </tbody>
@@ -32,29 +32,47 @@
   </ng-template>
 
   <ng-template #createAndEdit>
+
     <div class="form-group">
       <label>Организация</label>
-      <input type="text" [(ngModel)]="oneProject.contractor" class="form-control" />
+      <input id="contractor" name="contractor" type="text" [(ngModel)]="oneProject.contractor" class="form-control" required #contractor="ngModel" />
     </div>
     <div class="form-group">
       <label>Проектов запланировано</label>
-      <input type="text" [(ngModel)]="oneProject.targetProjects" class="form-control" />
+      <input id="targetProjects" name="targetProjects" type="number" [(ngModel)]="oneProject.targetProjects" class="form-control" required min="1" #targetProjects="ngModel" />
     </div>
     <div class="form-group">
       <label>Проектов выполнено</label>
-      <input type="text" [(ngModel)]="oneProject.completeProjects" class="form-control" />
+      <input id="completeProjects" name="completeProjects" type="number" [(ngModel)]="oneProject.completeProjects" class="form-control" required min="1" #completeProjects="ngModel" />
     </div>
     <div class="form-group">
       <label>Дата</label>
-      <input type="text" [(ngModel)]="oneProject.date" class="form-control" />
+      <input type="month" name="date" class="form-control" required [ngModel]="oneProject.date | date:'yyyy-MM'" (ngModelChange)="oneProject.date = $event" [value]="date | date:'yyyy-MM'" #date="ngModel">
+      {{oneProject.date| date:'yyyy-MM'}}
     </div>
-    <div>
-      <div [hidden]="!errorModel" class="alert alert-danger">
-        Заполните таблицу данных
+
+    <div *ngIf="contractor.invalid && (contractor.dirty || contractor.touched) ||
+                  targetProjects.invalid && (targetProjects.dirty || targetProjects.touched) ||
+                  completeProjects.invalid && (completeProjects.dirty || completeProjects.touched) ||
+                  date.invalid && (date.dirty || date.touched)"
+         class="alert alert-danger">
+      <div *ngIf="contractor.errors.required">
+        Заполните организацию
       </div>
-      <input type="button" value="Сохранить" (click)="save()" class="btn btn-success" />
-      <input type="button" value="Отмена" (click)="cancel()" class="btn btn-warning" />
+      <div *ngIf="targetProjects.errors.required">
+        Укажите число планируемых проектов
+      </div>
+      <div *ngIf="completeProjects.errors.required">
+        Укажите число выполненых проектов
+      </div>
+      <div *ngIf="date.errors.required">
+        Введите дату
+      </div>
     </div>
+
+    <input type="button" value="Сохранить" [disabled]="contractor.invalid" (click)="saveProject()" class="btn btn-success" />
+    <input type="button" value="Отмена" (click)="cancelProject()" class="btn btn-warning" />
+
   </ng-template>
 
 </div>

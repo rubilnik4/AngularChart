@@ -31,5 +31,41 @@ namespace AngularChartD.Controllers
         {
             return await _context.Projects.FirstOrDefaultAsync(x => x.Id == id);
         }
+
+        [HttpPost]       
+        public async Task<IActionResult> Post([FromBody]Project project)
+        {
+            if (ModelState.IsValid)
+            {              
+                await _context.Projects.AddAsync(project);
+                await _context.SaveChangesAsync();
+                return Ok(project);
+            }
+            return BadRequest(ModelState);
+        }
+
+        [HttpPut("{id}")]      
+        public async Task<IActionResult> Put(int id, [FromBody]Project project)
+        {           
+            if (ModelState.IsValid)
+            {               
+                _context.Update(project);
+                await _context.SaveChangesAsync();
+                return Ok(project);
+            }
+            return BadRequest(ModelState);
+        }
+
+        [HttpDelete("{id}")]        
+        public async Task<IActionResult> Delete(int id)
+        {          
+            Project project = await _context.Projects.FirstOrDefaultAsync(x => x.Id == id);
+            if (project != null)
+            {
+                _context.Projects.Remove(project);
+                await _context.SaveChangesAsync();
+            }
+            return Ok(project);
+        }
     }
 }

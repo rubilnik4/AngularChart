@@ -12,12 +12,7 @@ import { Project } from '../../models/project';
   templateUrl: './project-table.component.html',
   providers: [DataService]
 })
-//export class ProjectTableComponent {
 
-//  constructor(private router: Router, private http: HttpClient) { }
-
-
-//}
 
 export class ProjectTableComponent implements OnInit {
 
@@ -25,113 +20,71 @@ export class ProjectTableComponent implements OnInit {
   projects: Project[];
   tableMode: boolean = true;
 
-  //addName: string;
-  //errorModel: boolean = false;
-
-  //isUserAuthenticated = false;
-  //isReadByrefMode = false;
-
-  //userName: string;
-  //idRef: string
-
   constructor(private dataService: DataService, private httpClient: HttpClient, private router: Router, private activeRoute: ActivatedRoute) {
 
   }
 
   ngOnInit() {
-    this.loadProducts();
+    this.loadProjects();
   }
 
-
   //получаем данные через сервис
-  loadProducts() {
+  loadProjects() {
     this.dataService.getProjects()
       .subscribe((data: Project[]) => {
         this.projects = data;
       });
   }
   //// сохранение данных
-  //save() {
-  //  this.errorModel = false;
-  //  let error = false;
+  saveProject() {
 
-  //  if (typeof this.oneList.tasksTo !== 'undefined' && this.oneList.tasksTo.length > 0) {
-  //    error = this.oneList.tasksTo.some(l => l.name == null || l.name == "");
-  //  }
+    if (typeof this.oneProject.contractor == 'undefined' || this.oneProject.contractor.length == 0 ||
+      (this.oneProject.completeProjects <= 0) || (this.oneProject.targetProjects <= 0) ||
+      typeof this.oneProject.date == 'undefined') {
+      return;
+    }
 
-  //  if (error == true) {
-  //    this.errorModel = true;
-  //  }
-  //  else {
-  //    if (this.oneList.id == null) {
-  //      this.dataService.createListOfTasks(this.oneList)
-  //        .subscribe((data: ListOfTasks) => this.allLists.push(data));
-  //    } else {
-  //      this.dataService.updateListOfTasks(this.oneList)
-  //        .subscribe(data => this.loadProducts());
-  //    }
-  //    this.cancel(false);
-  //  }
-
-  //}
-  //editList(l: ListOfTasks) {
-  //  this.cancel(false);
-  //  this.tableMode = false;
-
-  //  let count = 0;
-  //  l.tasksTo.forEach(function (value) {
-  //    value.idTable = count++;
-  //  });
-
-  //  this.oneList = l;
-  //}
-  //cancel(updateneed: boolean) {
-  //  this.onelist = new listoftasks();
-  //  this.tablemode = true;
-  //  if (updateneed) {
-  //    this.loadproducts();
-  //  }
-  //}
-  //delete(p: ListOfTasks) {
-  //  this.dataService.deleteListOfTasks(p.id)
-  //    .subscribe(data => this.loadProducts());
-  //}
-
-  addNewProject() {   
-    this.tableMode = false;
-    this.oneProject = new Project();
+    if (this.oneProject.id == null) {
+      this.dataService.createProject(this.oneProject)
+        .subscribe((data: Project) => this.projects.push(data));
+    } else {
+      this.dataService.updateProject(this.oneProject)
+        .subscribe((data: Project) => {
+          var updateProjectIndex = this.projects.findIndex(p => p.id == data.id);
+          this.projects[updateProjectIndex] = data;
+        }
+        );
+    }
+    this.cancelProject();
   }
 
-  //addTask(name: string) {
-  //  if (typeof this.oneList.tasksTo !== 'undefined' && this.oneList.tasksTo.length > 0) {
-  //    let idmax = Math.max.apply(Math, this.oneList.tasksTo.map(function (o) { return o.idTable; }));
-  //    this.oneList.tasksTo.push(new TaskTo(0, idmax + 1, false, name));
-  //  }
-  //  else {
-  //    this.oneList.tasksTo = [new TaskTo(0, 0, false, name)];
-  //  }
-  //}
+  deleteProject(project: Project) {
+    this.dataService.deleteProject(project.id)
+      .subscribe((data: Project) => {
+        var deleteProjectIndex = this.projects.findIndex(p => p.id == data.id);
+        this.projects.splice(deleteProjectIndex, 1);      
+      }
+      );
+  }
 
-  //deleteTask(t: TaskTo) {
-  //  const index: number = this.oneList.tasksTo.indexOf(t);
-  //  if (index !== -1) {
-  //    this.oneList.tasksTo.splice(index, 1);
-  //  }
-  //}
 
-  //saveLink() {
-  //  this.dataService.copyMessage(environment.Url + '/' + this.idRef);
-  //}
+  cancelProject() {
+    this.oneProject = new Project();
+    this.tableMode = true;
+  }
 
-  //createZipAndDownload() {
-  //  this.dataService.getZipByRef(this.idRef).subscribe(data => {
-  //    var a = document.createElement('a');
-  //    var blob = new Blob([data], { type: "application/zip" });
-  //    a.href = URL.createObjectURL(blob);
-  //    a.download = this.userName;
-  //    a.click();
-  //  });
-  //}
+  addProject() {
+    this.tableMode = false;
+    this.oneProject = new Project();
+    this.oneProject.completeProjects = 1;
+    this.oneProject.targetProjects = 1;
+    this.oneProject.date = new Date(Date.now());
+  }
+
+  editProject(project: Project) {
+    this.tableMode = false;
+    this.oneProject = project;
+  }
 
 }
 
