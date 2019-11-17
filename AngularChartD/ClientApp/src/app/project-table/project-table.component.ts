@@ -1,9 +1,6 @@
-import { Injectable, Inject } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-import { NgForm } from '@angular/forms';
-import { environment } from '../../environments/environment';
+import { HttpClient} from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from '../../data-service/data-service';
 import { Project } from '../../models/project';
 
