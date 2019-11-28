@@ -32,7 +32,7 @@
     "popper.js": "^1.14.3",
     "chart.js": ">= 2.7.0 < 3",
     "chartjs-plugin-datalabels": "^0.6.0",
-    "ng2-charts": "2.0.0"
+    "ng2-charts": "2.2.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.6.0",

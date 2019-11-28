@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from '../../data-service/data-service';
 import { Project } from '../../models/project';
+import { DateConverter } from '../../converters/date-converter';
 
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
@@ -28,7 +29,7 @@ export class BarChartComponent implements OnInit {
       }
     }
   };
-  public barChartLabels: Label[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+  public barChartLabels: Label[] = Array<any>();
   public barChartType: ChartType = 'bar';
   public barChartLegend = true;
   public barChartPlugins = [pluginDataLabels];
@@ -38,35 +39,31 @@ export class BarChartComponent implements OnInit {
     { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' }
   ];
 
+  projects: Project[];
+
   constructor(private dataService: DataService, private httpClient: HttpClient, private router: Router, private activeRoute: ActivatedRoute) {
 
   }
 
   ngOnInit() {
-    
+    this.loadProjects();   
   }
 
-  // events
-  public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {
-    console.log(event, active);
+  //получаем данные через сервис
+  loadProjects() {
+    this.dataService.getProjects()
+      .subscribe((data: Project[]) => {
+        this.projects = data;
+        this.convertProjectsToChartParameters();
+     
+      });
   }
 
-  public chartHovered({ event, active }: { event: MouseEvent, active: {}[] }): void {
-    console.log(event, active);
+  convertProjectsToChartParameters() {   
+    var dateMonthAndYear = this.projects.map(p => DateConverter.dateToMonthAndYear(DateConverter.dateParse(p.date)));
+    this.barChartLabels = dateMonthAndYear;
   }
 
-  public randomize(): void {
-    // Only Change 3 values
-    const data = [
-      Math.round(Math.random() * 100),
-      59,
-      80,
-      (Math.random() * 100),
-      56,
-      (Math.random() * 100),
-      40];
-    this.barChartData[0].data = data;
-  }
 
 }
 
